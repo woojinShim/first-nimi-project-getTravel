@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>스파르타 게시판</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/cff2715f9e.js" crossorigin="anonymous"></script>
+    <script src="../static/navbar.js" defer></script>
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        .outer{
+            width: 700px;
+            height: 500px;
+            margin: auto;
+            margin-top: 70px;
+            border-radius: 12px;
+
+            background-color: #339af0;
+            padding: 60px;
+        }
+    </style>
+    <script>
+
+        // 메모를 생성합니다.
+        function writePost() {
+            // 1. 작성한 메모를 불러옵니다.
+            let title = $('#title').val();
+            let username = $('#username').val();
+            let contents = $('#contents').val();
+            // 4. 전달할 data JSON으로 만듭니다.
+            let data = {'title': title, 'username': username, 'contents': contents};
+            // 5. POST /api/memos 에 data를 전달합니다.
+            $.ajax({
+                type: "POST",
+                url: "/api/memos",
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data),
+                success: function (response) {
+                    alert('메시지가 성공적으로 작성되었습니다.');
+                    window.location.href = "/"
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar__logo">
+        <i class="fas fa-rocket"></i>
+        <a href="#">스파르타 게시판</a>
+    </div>
+    <ul class="navbar__menu">
+        <li><a href="">글쓰기</a></li>
+        <li><a href="/">목록</a></li>
+
+    </ul>
+    <ul class="navbar__icons">
+        <li><i class="fab fa-instagram"></i></li>
+        <li><i class="fab fa-facebook-square"></i></li>
+    </ul>
+    <a href="#" class="navbar__toggleBtn">
+        <i class="fas fa-bars"></i>
+    </a>
+</nav>
+
+<div class="outer">
+    <form>
+        <div class="form-group">
+            <label>제목</label>
+            <input type="email" class="form-control" id="title" placeholder="제목을 입력하세요.">
+        </div>
+        <div class="form-group">
+            <label>작성자</label>
+            <input type="email" class="form-control" id="username" placeholder="작성자명을 입력하세요.">
+        </div>
+        <div class="form-group">
+            <label>내용</label>
+            <textarea class="form-control" id="contents" placeholder="내용을 입력하세요." rows="3"></textarea>
+        </div>
+    </form>
+    <button type="button" class="btn btn-light" onclick="writePost()">제출하기</button>
+    <button type="button" class="btn btn-secondary" onclick="window.location.href = '/'">취소</button>
+</div>
+
+</body>
+</html>
